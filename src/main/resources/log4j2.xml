@@ -1,0 +1,61 @@
+<Configuration status="WARN">
+    <Properties>
+        <Property name="basePath">C:\eclipse</Property>
+        <Property name="currentDate">%d{yyyy-MM-dd}</Property>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="DebugFile" fileName="${basePath}/debug-${currentDate}.log"
+            filePattern="${basePath}/debug-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:ss} [%t] %-5level %c{1} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="1 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+            <Delete basePath="${basePath}" maxDepth="10">
+                <IfLastModified age="1d" />
+            </Delete>
+        </RollingFile>
+
+        <RollingFile name="InfoFile" fileName="${basePath}/info-${currentDate}.log"
+            filePattern="${basePath}/info-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>%d{HH:mm:00} [%t] %-5level %c{1} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="1 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+            <Delete basePath="${basePath}" maxDepth="10">
+                <IfLastModified age="1d" />
+            </Delete>
+        </RollingFile>
+
+        <RollingFile name="ErrorFile" fileName="${basePath}/error-${currentDate}.log"
+            filePattern="${basePath}/error-%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout>
+                <Pattern>%d{HH:00:00} [%t] %-5level %c{1} - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+                <SizeBasedTriggeringPolicy size="1 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+            <Delete basePath="${basePath}" maxDepth="10">
+                <IfLastModified age="1d" />
+            </Delete>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Root level="debug" additivity="false">
+            <AppenderRef ref="DebugFile"/>
+            <AppenderRef ref="InfoFile"/>
+            <AppenderRef ref="ErrorFile"/>
+        </Root>
+    </Loggers>
+</Configuration>
